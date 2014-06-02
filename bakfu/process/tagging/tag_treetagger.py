@@ -53,7 +53,7 @@ class TreeTagger(BaseProcessor):
     def __init__(self, *args, **kwargs):
         super(TreeTagger, self).__init__(*args, **kwargs)
         if 'tagdir' in kwargs:
-            self.TAGDIR=tagdir
+            self.TAGDIR = kwargs['tagdir']
         else:
             self.TAGDIR=os.environ.get('TAGDIR')
 
