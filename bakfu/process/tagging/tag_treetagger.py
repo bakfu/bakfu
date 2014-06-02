@@ -6,6 +6,7 @@ This module is a wrapper to TreeTagger.
 
 '''
 
+import os
 import string
 import sklearn
 
@@ -45,13 +46,16 @@ class TreeTagger(BaseProcessor):
     '''
 
     init_args = ()
-    init_kwargs = ()
+    init_kwargs = ('tagdir',)
     run_args = ()
     run_kwargs = ()
 
     def __init__(self, *args, **kwargs):
         super(TreeTagger, self).__init__(*args, **kwargs)
-
+        if 'tagdir' in kwargs:
+            self.TAGDIR=tagdir
+        else:
+            self.TAGDIR=os.environ.get('TAGDIR')
 
     def run(self, caller, *args, **kwargs):
         '''
@@ -68,7 +72,7 @@ class TreeTagger(BaseProcessor):
         text = string.join(cur_data,DELIMITER_NL)
         tagger = treetaggerwrapper.TreeTagger(
             TAGLANG=caller.get('lang'),
-            TAGDIR='/home/plloret/dev/ms/treetag/',#TODO : remove hard path
+            TAGDIR=self.TAGDIR,
             TAGINENC='utf-8',TAGOUTENC='utf-8')
 
         tags = tagger.TagText(text)
