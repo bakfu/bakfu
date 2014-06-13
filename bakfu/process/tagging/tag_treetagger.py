@@ -15,9 +15,11 @@ from bakfu.process.base import BaseProcessor
 
 DELIMITER = "<eol>"
 DELIMITER_NL = "\n"+DELIMITER+"\n"
+#TREETAGGER_HOME
 
 try:
-    import treetaggerwrapper
+    #import treetaggerwrapper
+    import  treetagger
 except:
     pass
 
@@ -25,6 +27,9 @@ except:
 class TreeTagger(BaseProcessor):
     '''
     Pre-processes data with treetagger.
+    :param: treetagger_home: Path to treetagger installation.
+        env var TREETAGGER_HOME will also be used.
+        default paths will be used otherwise.
 
     :Example:
 
@@ -52,10 +57,10 @@ class TreeTagger(BaseProcessor):
 
     def __init__(self, *args, **kwargs):
         super(TreeTagger, self).__init__(*args, **kwargs)
-        if 'tagdir' in kwargs:
-            self.TAGDIR = kwargs['tagdir']
+        if 'treetagger_home' in kwargs:
+            self.TREETAGGER_HOME = kwargs['tagdir']
         else:
-            self.TAGDIR=os.environ.get('TAGDIR')
+            self.TREETAGGER_HOME=os.environ.get('TREETAGGER_HOME','')
 
     def run(self, caller, *args, **kwargs):
         '''
@@ -69,13 +74,21 @@ class TreeTagger(BaseProcessor):
         cur_data = data_source.get_data()
 
         #run treetagger
-        text = string.join(cur_data,DELIMITER_NL)
-        tagger = treetaggerwrapper.TreeTagger(
-            TAGLANG=caller.get('lang'),
-            TAGDIR=self.TAGDIR,
-            TAGINENC='utf-8',TAGOUTENC='utf-8')
+        text = DELIMITER_NL.join(cur_data)
 
-        tags = tagger.TagText(text)
+        tagger = treetagger.TreeTagger(
+            encoding='utf8',
+            path_to_home=self.TREETAGGER_HOME+'/cmd/tree-tagger-english-utf8',
+            language=caller.get('language'))
+
+
+        #tagger = treetaggerwrapper.TreeTagger(
+            #TAGLANG=caller.get('lang'),
+            #TREETAGGER_HOME=self.TREETAGGER_HOME,
+            #TAGDIR=self.TAGDIR,
+            #TAGINENC='utf-8',TAGOUTENC='utf-8')
+        
+        tags = tagger.tag(text)
 
         #process treetagger output
         tagged_data = []
