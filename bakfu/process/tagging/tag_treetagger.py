@@ -18,8 +18,8 @@ DELIMITER_NL = "\n"+DELIMITER+"\n"
 #TREETAGGER_HOME
 
 try:
-    #import treetaggerwrapper
-    import  treetagger
+    import treetaggerwrapper
+    #import  treetagger
 except:
     pass
 
@@ -76,19 +76,20 @@ class TreeTagger(BaseProcessor):
         #run treetagger
         text = DELIMITER_NL.join(cur_data)
 
-        tagger = treetagger.TreeTagger(
-            encoding='utf8',
-            path_to_home=self.TREETAGGER_HOME+'/cmd/tree-tagger-english-utf8',
-            language=caller.get('language'))
+        #tagger = treetagger.TreeTagger(
+            #encoding='utf8',
+            #path_to_home=self.TREETAGGER_HOME+'/cmd/tree-tagger-english-utf8',
+            #language=caller.get('language'))
+        #tags = tagger.tag(text)
 
 
-        #tagger = treetaggerwrapper.TreeTagger(
-            #TAGLANG=caller.get('lang'),
+        tagger = treetaggerwrapper.TreeTagger(
+            TAGLANG=caller.get('lang'),
             #TREETAGGER_HOME=self.TREETAGGER_HOME,
-            #TAGDIR=self.TAGDIR,
-            #TAGINENC='utf-8',TAGOUTENC='utf-8')
+            TAGDIR=self.TREETAGGER_HOME,
+            TAGINENC='utf-8',TAGOUTENC='utf-8')
         
-        tags = tagger.tag(text)
+        tags = tagger.TagText(text)
 
         #process treetagger output
         tagged_data = []
