@@ -21,6 +21,15 @@ try:
 except:
     pass
 
+
+def tag(tagger, sentence):
+    '''
+    '''
+    lemmas = []
+    [lemmas.extend(a.lemma) for a in tagger(sentence,tokenize = True,  tags = True, chunks = True, relations = True, lemmata = True,   light = False)]
+    return lemmas
+
+
 @register('tagging.pattern')
 class PatternTagger(BaseProcessor):
     '''
@@ -54,31 +63,25 @@ class PatternTagger(BaseProcessor):
 
     def __init__(self, *args, **kwargs):
         super(PatternTagger, self).__init__(*args, **kwargs)
-        self.tagger =  pattern.fr.parsetree
-        #if self.lang == 'fr':
-            #self.tagger = pattern.fr.parsetree
-        #elif self.lang == 'en':
-            #self.tagger = pattern.en.parsetree 
+        self.tagger =  None
 
     def run(self, caller, *args, **kwargs):
         '''
-        TODO:CLEAN UP
         '''
         super(PatternTagger, self).run(caller, *args, **kwargs)
 
         data_source = caller.get_chain('data_source')
         self.caller=caller
 
+        lang = caller.get('lang')
+        if lang == 'fr':
+            self.tagger = pattern.fr.parsetree
+        elif  lang == 'en':
+            self.tagger = pattern.en.parsetree
+            
         cur_data = data_source.get_data()
-        print(cur_data)
-        #import IPython;IPython.embed()
 
-        def tag(sentence):
-            lemmas = []
-            [lemmas.extend(a.lemma) for a in self.tagger(sentence,tokenize = True,  tags = True, chunks = True, relations = True, lemmata = True,   light = False)]
-            return lemmas
-
-        result = [tag(s) for s in cur_data]
+        result = [tag(self.tagger, s) for s in cur_data]
         caller.data['result'] = result
 
         #reformat data to ((id,data),...)
