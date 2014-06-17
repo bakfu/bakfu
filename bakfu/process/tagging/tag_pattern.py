@@ -37,6 +37,8 @@ class PatternTagger(BaseProcessor):
 
     :Example:
 
+.. doctest::
+
     >>>from bakfu.examples.dataset1 import DATA
     >>>import nltk
     >>>baf = bakfu.Chain(lang="en")

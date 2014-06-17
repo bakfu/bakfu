@@ -25,7 +25,9 @@ Reference
 .. toctree::
    :maxdepth: 2
 
-   reference
+   reference.index
+   reference/index
+
    examples
 
 
