@@ -17,4 +17,12 @@ If you want to dive into the subject you should check out the :ref:`quickstart`.
     The documentation is (also) still far from complete.
 
 
+
+Core concepts
+----------------
+
+The library is structured around a toolchain approach.
+You start by creating a Chain, and add processing steps to it : data loading, tagging, clustering ...
+
+
 .. _`scikit-learn`: http://scikit-learn.org
