@@ -8,6 +8,8 @@ This is an interface to sklearn vectorizer classes.
 import sklearn
 
 from sklearn.feature_extraction.text import CountVectorizer as SKCountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer as SKTfidfVectorizer
+
 
 from ...core.routes import register
 from .base import BaseVectorizer
@@ -15,6 +17,9 @@ from .base import BaseVectorizer
 import nltk.corpus
 
 nltk.corpus.stopwords.words("english")
+
+
+
 
 
 @register('vectorize.sklearn')
@@ -90,3 +95,21 @@ class CountVectorizer(BaseVectorizer):
         obj.run(caller)
 
         return obj
+
+
+
+@register('vectorize.tfidf')
+class TfIdfVectorizer(CountVectorizer):
+    '''
+    sklearn CountVectorizer
+    '''
+    init_args = ()
+    init_kwargs = ('ngram_range', 'min_df',
+                   'max_features', 'stop_words',
+                   'tokenizer')
+    run_args = ()
+    run_kwargs = ()
+
+    def __init__(self, *args, **kwargs):
+        super(TfIdfVectorizer, self).__init__(*args, **kwargs)
+        self.vectorizer = SKTfidfVectorizer(*args, **kwargs)
