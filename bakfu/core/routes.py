@@ -7,11 +7,15 @@ __processors_failed__ = {}
 
 def get_processor(name, regexp=None):
     if regexp == None:
-        return __processors__.get(name, None)
+        try:
+            return  __processors[name]
+        except:
+            raise KeyError("Unknown processor")            
     else:
         regexp = re.compile(regexp)
         return [key for key in __processors__.keys()
                 if regexp.match(key)]
+    
 
 
 def register(name, errors = []):
