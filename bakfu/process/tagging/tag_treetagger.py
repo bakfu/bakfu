@@ -7,6 +7,7 @@ This module is a wrapper to TreeTagger.
 '''
 
 import os
+import sys
 import string
 import sklearn
 
@@ -17,13 +18,16 @@ DELIMITER = "<eol>"
 DELIMITER_NL = "\n"+DELIMITER+"\n"
 #TREETAGGER_HOME
 
+__errors__ = []
+
 try:
     import treetaggerwrapper
     #import  treetagger
-except:
-    pass
+except Exception:
+    e = sys.exc_info()
+    __errors__.append(e)
 
-@register('tagging.treetagger')
+@register('tagging.treetagger', __errors__)
 class TreeTagger(BaseProcessor):
     '''
     Pre-processes data with treetagger.

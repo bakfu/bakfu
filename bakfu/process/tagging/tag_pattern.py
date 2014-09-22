@@ -7,6 +7,7 @@ This module is a wrapper to TreeTagger.
 '''
 
 import os
+import sys
 import string
 import sklearn
 from itertools import chain
@@ -14,13 +15,14 @@ from itertools import chain
 from bakfu.core.routes import register
 from bakfu.process.base import BaseProcessor
 
+__errors__ = []
 
 try:
     import pattern.fr
     import pattern.en
-except:
-    pass
-
+except Exception:
+    e = sys.exc_info()
+    __errors__.append(e)
 
 def tag(tagger, sentence):
     '''
@@ -30,7 +32,7 @@ def tag(tagger, sentence):
     return lemmas
 
 
-@register('tagging.pattern')
+@register('tagging.pattern', __errors__)
 class PatternTagger(BaseProcessor):
     '''
     Pre-processes data with pattern.
