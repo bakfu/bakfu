@@ -8,9 +8,9 @@ __processors_failed__ = {}
 def get_processor(name, regexp=None):
     if regexp == None:
         try:
-            return  __processors[name]
+            return  __processors__[name]
         except:
-            raise KeyError("Unknown processor")            
+            raise KeyError("Unknown processor : {}".format(name))
     else:
         regexp = re.compile(regexp)
         return [key for key in __processors__.keys()
