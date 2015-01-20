@@ -2,7 +2,7 @@ numpy
 scipy
 scikit-learn 
 six>=1.6.1
-git+https://github.com/nltk/nltk
+nltk
 pattern
-git+https://github.com/miotto/treetagger-python.git
 gensim
+git+https://github.com/miotto/treetagger-python.git
