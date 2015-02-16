@@ -20,4 +20,3 @@ if len(routes.__processors_failed__)>0:
     print('WARNING :The following modules failed to register : ')
     for failed in six.iterkeys(routes.__processors_failed__):
         print(failed)
-    
