@@ -115,10 +115,13 @@ class Chain(object):
 
         for step in json_data.get("process",[]):
             step_name = step.keys()[0]
+            step_data = step.get(step_name,{})
+            step_args = step_data.get('args',[])
+
             if step_name.find('data') == 0:
-                step_data = step.get(step_name,{})
-                step_args = step_data.get('args',[])
                 baf.load(step_name, *step_args)
+            else:
+                baf.process(step_name, *step_args)
 
         return baf
 
