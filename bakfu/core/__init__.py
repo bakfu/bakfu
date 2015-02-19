@@ -94,48 +94,52 @@ class Chain(object):
        chain_str = u' -> '.join([str(elt) for elt in self.chain])
        return u'Chain : \n{chain}'.format(chain=chain_str)
 
-
     @staticmethod
-    def load_json(text=None, path=None):
-        '''
-        Load a chain from a json description.
-        Each step described in the json will be executed.
-
-        TODO:implement
-        '''
-        #Load data from file
-        if path is not None:
-            text = open(path, "r").read()
-
-        #parse
-        json_data = json.loads(text)
-
-        chain_data = json_data.get('chain',{})
+    def load_chain(load_dict):
         baf = Chain()
 
-        for step in json_data.get("process",[]):
+        for step in load_dict.get("process",[]):
             step_name = step.keys()[0]
             step_data = step.get(step_name,{})
             step_args = step_data.get('args',[])
-
+            print('step',step_name, step_args)
             if step_name.find('data') == 0:
                 baf.load(step_name, *step_args)
             else:
                 baf.process(step_name, *step_args)
-
         return baf
 
     @staticmethod
-    def load_yaml(yaml=None, path=None):
+    def load_json(raw_json=None, path=None):
+        '''
+        Load a chain from a json description.
+        Each step described in the json will be executed.
+        '''
+
+        #Load data from file
+        if path is not None:
+            raw_json = open(path, "r").read()
+
+        #parse
+        json_data = json.loads(raw_json)
+        #chain_data = json_data.get('chain',{})
+        return Chain.load_chain(json_data)
+
+
+    @staticmethod
+    def load_yaml(raw_yaml=None, path=None):
         '''
         Load a chain from a yaml description.
         Each step described in the yaml will be executed.
-
-        TODO:implement
         '''
-        pass
+        #Load data from file
+        if path is not None:
+            raw_yaml = open(path, "r").read()
 
-
+        #parse
+        chain_data = yaml.load(raw_yaml)
+        print(chain_data)
+        return Chain.load_chain(chain_data)
 
 
 
