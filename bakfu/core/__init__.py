@@ -96,17 +96,22 @@ class Chain(object):
 
     @staticmethod
     def load_chain(load_dict):
-        baf = Chain()
+        chain_data = load_dict.get('chain',{})
+        chain_kwargs = chain_data.get('kwargs',{})
+        baf = Chain(**chain_kwargs)
 
         for step in load_dict.get("process",[]):
             step_name = step.keys()[0]
             step_data = step.get(step_name,{})
             step_args = step_data.get('args',[])
-            print('step',step_name, step_args)
+
             if step_name.find('data') == 0:
                 baf.load(step_name, *step_args)
             else:
                 baf.process(step_name, *step_args)
+
+        #import pdb;pdb.set_trace();
+
         return baf
 
     @staticmethod

@@ -1,0 +1,16 @@
+chain:
+    kwargs:
+        lang: en
+process:
+    - data.simple: 
+        args:
+            - [
+                [1, This is a test.],
+                [2, Another test sentence.],
+                [3, Yet another sentence.],
+                [4, Two sentences this time.]
+             ]
+    - tagging.pattern:
+        args:
+            []
+

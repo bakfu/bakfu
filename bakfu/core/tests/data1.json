@@ -1,0 +1,32 @@
+{
+  "chain" : {
+        "kwargs":{
+            "lang":"fr"
+        }
+  },
+  
+  "process" : [
+  {
+        "data.simple": 
+        {
+        "args":[
+            [[1,"Ceci est un test."],
+            [2,"Cette phrase est un autre test."]]
+        ]
+        }
+  },
+
+    {
+        "tagging.pattern": 
+        {
+        "args":[
+        ]
+        }
+
+
+  }
+
+
+  ]
+}
+
