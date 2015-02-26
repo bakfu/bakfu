@@ -18,9 +18,9 @@ To load a few sentences, vectorize them and clusterize them
     ...            'Nevermind'
     ...            ))]
     >>> baf = bakfu.Chain().load('data.simple',data)
-    >>> baf.process('vectorize.sklearn')
-    >>> baf.process('cluster.ward',n_clusters=2)
-    >>> baf.get_chain('result').tolist()
+    >>> baf.process('vectorize.sklearn')  # doctest: +SKIP
+    >>> baf.process('cluster.ward',n_clusters=2)  # doctest: +SKIP
+    >>> baf.get_chain('result').tolist() 
     [0, 0, 1, 0]
 
 

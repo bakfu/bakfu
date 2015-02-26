@@ -17,7 +17,7 @@ def test_data_xml():
 
     data_source = baf.data['base_data']
 
-    assert data_source.data == ['Test 1',
+    assert data_source.get_data() == ['Test 1',
         'Test 2',
         'Test 3',
         'Other',

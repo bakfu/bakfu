@@ -46,7 +46,7 @@ class XmlDataSource(BaseDataSource):
 
     def __init__(self, *args, **kwargs):
         super(XmlDataSource, self).__init__()
-
+        
         filename = kwargs.get('file',None)
         if filename is None:
             raise Exception('No file specified')
@@ -63,12 +63,13 @@ class XmlDataSource(BaseDataSource):
             parser = lxml.etree.XMLParser(recover=True, encoding='utf-8')
             xml = lxml.etree.XML(text)
 
+
         #find data elements
         query_result = xml.xpath(kwargs['query'])
 
         processor = kwargs['processor']
         self.data = [
-                processor(elt) for elt in query_result
+                (idx,processor(elt)) for idx,elt in enumerate(query_result)
                 ]
 
         self._data = {'main_data':self.data,'data':self.data,

@@ -104,13 +104,12 @@ class Chain(object):
             step_name = step.keys()[0]
             step_data = step.get(step_name,{})
             step_args = step_data.get('args',[])
+            step_kwargs = step_data.get('kwargs',{})
 
             if step_name.find('data') == 0:
-                baf.load(step_name, *step_args)
+                baf.load(step_name, *step_args, **step_kwargs)
             else:
-                baf.process(step_name, *step_args)
-
-        #import pdb;pdb.set_trace();
+                baf.process(step_name, *step_args, **step_kwargs)
 
         return baf
 
