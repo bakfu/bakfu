@@ -9,6 +9,7 @@ import six
 import bakfu.data
 import bakfu.process
 import bakfu.classify
+import bakfu.tools
 
 from .core import Chain
 from .core import routes
