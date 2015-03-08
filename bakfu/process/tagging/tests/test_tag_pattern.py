@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import sys
 import pytest
 import six
 from bakfu.core import Chain
@@ -16,14 +16,16 @@ def fixture_en():
           )
     return Chain(lang='en').load('data.simple',data)
 
+
+@pytest.mark.skipif(sys.version_info >= (3,0),
+                    reason="does not support python 3")
 def test_tagging_en():
     baf = fixture_en()
     baf.process('tagging.pattern')
     tagged_data = baf.get_chain("data_source").get_data()
     reference_tagged_data = [['this', 'be', 'a', 'test', '.'], ['we', 'be', 'testing', '.'], ['other', 'thing', '.', 'more', 'test', '.']]
     assert tagged_data == reference_tagged_data
-    
-    
+
 
 @pytest.fixture
 def fixture_fr():
@@ -35,6 +37,9 @@ def fixture_fr():
           )
     return Chain(lang='fr').load('data.simple',data)
 
+
+@pytest.mark.skipif(sys.version_info >= (3,0),
+                    reason="does not support python 3")
 def test_tagging_fr():
     baf = fixture_fr()
     baf.process('tagging.pattern')

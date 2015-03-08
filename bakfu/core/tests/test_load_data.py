@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 
 import pytest
 
 from bakfu.core import Chain
 
-
+@pytest.mark.skipif(sys.version_info >= (3,0),
+                    reason="does not support python 3")
 def test_core_load_json():
     '''
     Load a chain from a json file.
@@ -22,7 +24,8 @@ def test_core_load_json():
             (2, [u'cette', u'phrase', u'\xeatre', u'un', u'autre', u'test', u'.'])
             ]
 
-
+@pytest.mark.skipif(sys.version_info >= (3,0),
+                    reason="does not support python 3")
 def test_core_load_yaml():
     '''
     Load a chain from a yaml file.
