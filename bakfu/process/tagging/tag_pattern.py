@@ -9,6 +9,8 @@ This module is a wrapper to TreeTagger.
 import os
 import sys
 import string
+
+import six
 import sklearn
 from itertools import chain
 
@@ -17,12 +19,15 @@ from bakfu.process.base import BaseProcessor
 
 __errors__ = []
 
-try:
-    import pattern.fr
-    import pattern.en
-except Exception:
-    e = sys.exc_info()
-    __errors__.append(e)
+
+if six.PY2:
+    try:
+        import pattern.en
+        import pattern.fr
+    except Exception:
+        e = sys.exc_info()
+        __errors__.append(e)
+
 
 def tag(tagger, sentence):
     '''

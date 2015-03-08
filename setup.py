@@ -4,7 +4,7 @@ from distutils.core import setup
 from setuptools import  find_packages
 
 setup(name='bakfu',
-      version='0.01',
+      version='0.1',
       description='A toolkit for scikit-learn (a toolkit for scipy (a toolkit for python)). Toolkit for clustering, machine learning, natural language processing ...',
       author='Patrick Lloret',
       author_email='plloret@gmx.com',

@@ -101,7 +101,7 @@ class Chain(object):
         baf = Chain(**chain_kwargs)
 
         for step in load_dict.get("process",[]):
-            step_name = step.keys()[0]
+            step_name = list(step)[0]
             step_data = step.get(step_name,{})
             step_args = step_data.get('args',[])
             step_kwargs = step_data.get('kwargs',{})
