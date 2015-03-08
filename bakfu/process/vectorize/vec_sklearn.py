@@ -26,18 +26,26 @@ nltk.corpus.stopwords.words("english")
 class CountVectorizer(BaseVectorizer):
     '''
     sklearn CountVectorizer
+    
+    action : fit, transform, or fit_transform
+        if transform, the CountVectorizer will  act as a proxy to the previous instance
     '''
     init_args = ()
     init_kwargs = ('ngram_range', 'min_df',
                    'max_features', 'stop_words',
-                   'tokenizer')
+                   'tokenizer',
+                   'action')
     run_args = ()
     run_kwargs = ()
 
     def __init__(self, *args, **kwargs):
         super(CountVectorizer, self).__init__(*args, **kwargs)
-
-        self.vectorizer = SKCountVectorizer(*args, **kwargs)
+        self.action = kwargs.get('action','fit_transform')
+        
+        if self.action == 'transform':
+            self.vectorizer = None
+        else:
+            self.vectorizer = SKCountVectorizer(*args, **kwargs)
 
     def vectorize(self, data_source, *args, **kwargs):
         '''
@@ -57,8 +65,14 @@ class CountVectorizer(BaseVectorizer):
         super(CountVectorizer, self).run(caller, *args, **kwargs)
         data_source = caller.get_chain('data_source')
 
-        #obj.run(*args, **kwargs)
-        result = self.vectorizer.fit_transform(data_source.get_data())
+        if self.action == 'transform':
+            self.vectorizer = caller.get_chain('vectorizer')
+            result = self.vectorizer.transform(data_source.get_data())
+        elif self.action == 'fit':
+            result = self.vectorizer.fit(data_source.get_data())            
+        elif self.action == 'fit_transform':
+            result = self.vectorizer.fit_transform(data_source.get_data())
+
         self.results = {'vectorizer':self.vectorizer, 'data':result}
 
         caller.data['vectorizer'] = self.vectorizer
