@@ -8,11 +8,13 @@ from sklearn import metrics
 from sklearn.preprocessing import StandardScaler
 
 from ...core.routes import register
-from .base import BaseMl
+from .base import BaseMl, BaseMlSk
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import ExtraTreesClassifier
+from sklearn.tree import DecisionTreeClassifier
 
 @register('ml.forest')
-class ForestMl(BaseMl):
+class ForestMl(BaseMlSk):
     '''Random forest
 Parameters (not implemented yet) :
 classifier : if not specified, create a new classifier.
@@ -34,68 +36,23 @@ TODO: Allow reuse of classifiers.
     init_kwargs = ('n_estimators', 'classifier', 'data', 'action')
     run_kwargs = ()
     #max_depth
-    init_method = RandomForestClassifier.__init__
-    run_method = RandomForestClassifier.fit_transform
-
-    def __init__(self, *args, **kwargs):
-        super(ForestMl, self).__init__(*args, **kwargs)
-        self.action = kwargs.get('action',None)
-
-        if self.action != "predict":
-            n_estimators = kwargs.get('n_estimators', 10)
-            self.classifier = RandomForestClassifier(n_estimators=n_estimators)
-            self._data['classifier'] = self.classifier
-        else:
-            self.classifier = None
-
-    def _get_classifier(self):
-        if self.classifier:
-            return self.classifier
-        else:
-            classifier = self.get('classifier')
-            self.classifier = classifier
-            return classifier
-
-    def fit(self, caller, *args, **kwargs):
-        '''Train a classifier from tagged data'''
-        classifier = self._get_classifier()
-
-        vectorizer_result = caller.get('vectorizer_result')
-        clusters = caller.get("clusterizer_result")
-        classifier.fit(vectorizer_result.toarray(), clusters)
-
-        return classifier
-
-    def predict(self, caller, *args, **kwargs):
-        '''Use classifier on new data'''
-        classifier = self._get_classifier()
-        vectorizer = caller.get_chain('vectorizer')
-
-        #New data
-        data_source = caller.get_chain("data_source")
-        new_vectorizer_result = vectorizer.transform(data_source.get_data())
-
-        result = self.classifier.predict(new_vectorizer_result.toarray())
-        return result
-
-    def run(self, caller, *args, **kwargs):
-        super(ForestMl, self).run(caller,*args, **kwargs)
-
-        if self.action in (None, 'fit'):
-            result = self.fit(caller, *args, **kwargs)
-            self.update(
-                result = result,
-                classifier = result
-                )
-
-        if self.action in (None, 'predict'):
-            result = self.predict(caller, *args, **kwargs)
-            self.update(
-                result=result,
-                classifier_result=result
-                )
-
-        return self
+    #init_method = RandomForestClassifier.__init__
+    #run_method = RandomForestClassifier.fit_transform
+    classifier_class = RandomForestClassifier
 
 
 
+@register('ml.extratrees')
+class ExtraTreesMl(BaseMlSk):
+    '''
+    '''
+    init_kwargs = ('n_estimators', 'classifier', 'data', 'action')
+    run_kwargs = ()
+    classifier_class = ExtraTreesClassifier
+
+
+@register('ml.decisiontree')
+class ExtraTreesMl(BaseMlSk):
+    '''
+    '''
+    classifier_class = DecisionTreeClassifier
