@@ -57,7 +57,8 @@ class BaseMlSk(BaseMl):
         classifier = self._get_classifier()
 
         vectorizer_result = caller.get('vectorizer_result')
-        clusters = caller.get("clusterizer_result")
+        #clusters = caller.get("clusterizer_result")
+        clusters = caller.get_chain('labels')
         classifier.fit(vectorizer_result.toarray(), clusters)
 
         return classifier
@@ -72,6 +73,7 @@ class BaseMlSk(BaseMl):
         new_vectorizer_result = vectorizer.transform(data_source.get_data())
 
         result = self.classifier.predict(new_vectorizer_result.toarray())
+
         return result
 
     def run(self, caller, *args, **kwargs):

@@ -38,6 +38,7 @@ class DBSCANClusterizer(BaseClusterizer):
         db = self.clusterizer.fit(X)
 
         caller.data['clusterizer_result'] = db
+        caller.data['labels'] = db
 
         return self.update(
             result=db,

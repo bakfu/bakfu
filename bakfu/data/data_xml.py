@@ -81,6 +81,7 @@ class XmlDataSource(BaseDataSource):
                     target_processor(elt) for elt in query_result
                     ]
             self._data['targets'] = self.targets
+            self._data['labels'] = self.targets
 
 
     def run(self, caller, *args, **kwargs):

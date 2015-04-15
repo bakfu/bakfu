@@ -4,6 +4,8 @@ import yaml
 
 from .routes import get_processor
 
+import logging
+log = logging.getLogger('bakfu')
 
 LANGUAGES = {
     'en':'english',
@@ -96,12 +98,14 @@ class Chain(object):
 
     @staticmethod
     def load_chain(load_dict):
+        log.debug('load_chain')
         chain_data = load_dict.get('chain',{})
         chain_kwargs = chain_data.get('kwargs',{})
         baf = Chain(**chain_kwargs)
 
         for step in load_dict.get("process",[]):
             step_name = list(step)[0]
+            log.debug('step : {}'.format(step_name))
             step_data = step.get(step_name,{})
             step_args = step_data.get('args',[])
             step_kwargs = step_data.get('kwargs',{})

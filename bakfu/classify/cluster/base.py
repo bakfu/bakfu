@@ -21,6 +21,7 @@ class BaseClusterizer(SklearnClassifier):
         predictions = self.classifier.fit_predict(X.toarray())
 
         caller.data['clusterizer_result'] = predictions
+        caller.data['labels'] = predictions
         caller.data['clusterizer'] = self.classifier
 
         return self.update(
