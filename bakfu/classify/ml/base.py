@@ -13,14 +13,16 @@ class BaseMl(Processor):
     def __init__(self, *args, **kwargs):
         super(BaseMl, self).__init__(*args, **kwargs)
         self.clusterizer = None
+        self.classifier = None
 
-    def __getattr__(self,attr):
-        '''Propagate attribute search to the clusterizer.'''
+    def __getattr__(self, attr):
+        '''Propagate attribute search to the vectorizer.'''
+        if attr == 'classifier':
+            return super(BaseMl, self).getattr(attr)
         try:
-            return getattr(self, attr)
-        except:
-            return getattr(self.clusterizer, attr)
-
+            return super(BaseMl, self).getattr(attr, None)
+        except AttributeError:
+            return getattr(self.classifier, attr)
 
 
 class BaseMlSk(BaseMl):
@@ -36,7 +38,7 @@ class BaseMlSk(BaseMl):
         super(BaseMlSk, self).__init__(*args, **kwargs)
         self.action = kwargs.get('action',None)
 
-        init_kwargs = {k:v for k,v in six.iteritems(kwargs) if k in self._init_kwargs}
+        init_kwargs = {k:v for k,v in six.iteritems(kwargs) if k in self.init_kwargs}
 
         if self.action != "predict":
             self.classifier = self.classifier_class(**init_kwargs)
