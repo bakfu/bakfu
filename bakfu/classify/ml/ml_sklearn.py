@@ -13,7 +13,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
-from sklearn.lda.LDA
+from sklearn.lda import LDA
 
 @register('ml.gaussianNB')
 class SKGaussianNB(BaseMlSk):
