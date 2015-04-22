@@ -13,6 +13,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
+from sklearn.lda.LDA
 
 @register('ml.gaussianNB')
 class SKGaussianNB(BaseMlSk):
@@ -58,4 +59,14 @@ class AdaBoost(BaseMlSk):
                    'classifier', 'data', 'action')
     run_kwargs = ()
     classifier_class = SVC
+
+@register('ml.LDA')
+class LDA(BaseMlSk):
+    '''
+    LDA (from sklearn)
+    '''
+    init_kwargs = ('solver', 'shrinkage', 'priors', 'n_components', 
+                   'store_covariance', 'tol')
+    run_kwargs = ()
+    classifier_class = LDA
 
