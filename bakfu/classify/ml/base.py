@@ -31,12 +31,12 @@ class BaseMlSk(BaseMl):
     '''
     classifier_class = None
 
-    init_kwargs = ('action',)
+    init_kwargs = ()
     run_kwargs = ()
 
     def __init__(self, *args, **kwargs):
         super(BaseMlSk, self).__init__(*args, **kwargs)
-        self.action = kwargs.get('action',None)
+        self.action = kwargs.pop('action',None)
 
         init_kwargs = {k:v for k,v in six.iteritems(kwargs) if k in self.init_kwargs}
 
