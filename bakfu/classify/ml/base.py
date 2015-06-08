@@ -73,7 +73,7 @@ class BaseMlSk(BaseMl):
         #New data
         data_source = caller.get_chain("data_source")
         new_vectorizer_result = vectorizer.transform(data_source.get_data())
-
+        self.new_vectorizer_result = new_vectorizer_result
         result = self.classifier.predict(new_vectorizer_result.toarray())
 
         return result
@@ -92,7 +92,8 @@ class BaseMlSk(BaseMl):
             result = self.predict(caller, *args, **kwargs)
             self.update(
                 result=result,
-                classifier_result=result
+                classifier_result=result,
+                new_vectorizer_result=self.new_vectorizer_result
                 )
 
         return self
