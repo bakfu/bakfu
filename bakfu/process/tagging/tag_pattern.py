@@ -20,13 +20,17 @@ from bakfu.process.base import BaseProcessor
 __errors__ = []
 
 
-if six.PY2:
-    try:
-        import pattern.en
-        import pattern.fr
-    except Exception:
-        e = sys.exc_info()
-        __errors__.append(e)
+try:
+    import pattern.fr
+except Exception:
+    e = sys.exc_info()
+    __errors__.append(e)
+
+try:
+    import pattern.en
+except Exception:
+    e = sys.exc_info()
+    __errors__.append(e)
 
 
 def tag(tagger, sentence):
