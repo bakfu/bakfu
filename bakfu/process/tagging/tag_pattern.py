@@ -30,7 +30,11 @@ try:
     import pattern.en
 except Exception:
     e = sys.exc_info()
-    __errors__.append(e)
+    if e[1].msg == "No module named 'pywordnet'":
+        # py3 incompatibility ; must be fixed in pattern
+        pass
+    else:
+        __errors__.append(e)
 
 
 def tag(tagger, sentence):
