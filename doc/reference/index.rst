@@ -18,6 +18,19 @@ The data variable must be in the following format :
     [(id0,data0),(id1,data1),...]
 Where id* are *integers* and data* are *str*.
 
+------------------------
+Save/load a chain
+------------------------
+
+To save a chain to a pickle file : 
+::
+    baf.process('pickle.save','file.pkl')
+
+And to load it : 
+::
+    baf = Chain().load('pickle.load','file.pkl')
+
+
 =================
 Processing
 =================
