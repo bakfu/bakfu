@@ -32,7 +32,7 @@ sys.path.insert(0, os.path.abspath('..'))
 
 sys.path.insert(0, os.path.abspath('sphinxext'))
 sys.path.append("/home/plloret/Progs/python/sphinx/sphinx/ext")
-
+sys.path.append('/usr/local/lib/python3.4/dist-packages/sphinx/ext')
 
 # Try to override the matplotlib configuration as early as possible
 #try:    import gen_rst

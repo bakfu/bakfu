@@ -83,12 +83,38 @@ _______________________
 .. autoclass:: bakfu.process.tagging.tag_pattern.PatternTagger
    :members:
 
+
    
 =================
 Classifying
 =================
+.. automodule:: bakfu.classify.ml.forest
+   :no-undoc-members:
+   :members:
+   :no-private-members:
+   :no-special-members:
+   :no-inherited-members:
+   :show-inheritance:
+
+=================
+Tools
+=================
+
+.. automodule:: bakfu.tools.debug
+   :no-undoc-members:
+   :members:
+   :no-private-members:
+   :no-special-members:
+   :no-inherited-members:
+   :show-inheritance:
 
 
-
+.. automodule:: bakfu.tools.store
+   :no-undoc-members:
+   :members:
+   :no-private-members:
+   :no-special-members:
+   :no-inherited-members:
+   :show-inheritance:
 
 .. _`pattern`: https://github.com/clips/pattern

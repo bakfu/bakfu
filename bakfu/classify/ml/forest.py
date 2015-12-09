@@ -24,14 +24,12 @@ action : if not specified, a new classifier will be created
     if 'fit' : classifier is created but not used
     if 'predict': previous classifier is used
 Usage : 
-#create clusters
-baf.process('cluster.ward')
-#load new data
-baf.load('data.simple',(...))
-#train classifier and use 
-baf.process('ml.forest')
-
-TODO: Allow reuse of classifiers.
+  >>> #create clusters
+  >>> baf.process('cluster.ward')
+  >>> #load new data
+  >>> baf.load('data.simple',(...))
+  >>> #train classifier and use 
+  >>> baf.process('ml.forest')
     '''
     init_kwargs = ('n_estimators', 'classifier', 'data', 'action')
     run_kwargs = ()
