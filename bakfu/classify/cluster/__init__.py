@@ -3,3 +3,4 @@
 from . import dbscan_sklearn
 from . import ward_sklearn
 from . import spectral_sklearn
+from . import hdbscan
