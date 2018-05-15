@@ -9,18 +9,18 @@ from bakfu.process.vectorize.vec_sklearn import CountVectorizer
 from bakfu.classify.cluster.ward_sklearn import WardClusterizer
 
 def test_cluster():
-    
+
     data=((0,'data test 1'),
           (1,'Data test 2'),
           (2,'other data test 3.')
           )
     test_subject = Chain().load('data.simple',data).process('vectorize.sklearn').process('cluster.ward')
 
-    
+
     assert isinstance(test_subject.chain[0],SimpleDataSource)
     assert isinstance(test_subject.chain[1],CountVectorizer)
     assert isinstance(test_subject.chain[2],WardClusterizer)
-    
+
     result = test_subject.get_chain('result')
     assert len(result) == len(data)
 
@@ -45,7 +45,7 @@ def test_cluster_ncluster():
         baf = Chain().load('data.simple',data) \
                  .process('vectorize.sklearn') \
                  .process(classifier, n_clusters=3)
-    
+
         result = baf.get_chain('result')
 
 
@@ -54,3 +54,22 @@ def test_cluster_ncluster():
         assert result[6] == result[7] == result[8]
 
         assert len(set(result)) == 3
+
+
+def test_hdbscan():
+    '''
+    Simple test for hdbscan.
+    '''
+
+    G1 = 'First set'
+    G2 = 'Second group'
+    data = enumerate((G1,G1,G1,G1,G2,G2,G2,G2))
+    data = list(data)
+
+    baf = Chain().load('data.simple',data)
+    baf.process('vectorize.sklearn')
+    baf.process('cluster.hdbscan', min_cluster_size=2, metric="cosine")
+    result = baf.get_chain('result').tolist()
+
+    assert len(set(result[0:4])) == 1
+    assert len(set(result[4:])) == 1
